@@ -13,7 +13,7 @@ interface Props {
   data: string;
 }
 
-export default function ShowAll(props: Props) {
+export default function ShowByActor(props: Props) {
   const [festivals, setFestivals] = useState<Festival[] | null>(null);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
@@ -24,6 +24,7 @@ export default function ShowAll(props: Props) {
         festival.date = new Date(festival.date).toLocaleDateString();
         return festival;
       });
+      console.log(json);
 
       setFestivals(json);
       setLoading(false);

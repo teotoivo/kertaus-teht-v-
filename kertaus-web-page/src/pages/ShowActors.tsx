@@ -8,10 +8,10 @@ interface band {
 }
 
 interface Props {
-  setSearch: React.Dispatch<React.SetStateAction<string>>;
+  setSearchMode: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
-export default function ShowActors({ setSearch }: Props) {
+export default function ShowActors({ setSearchMode }: Props) {
   const [bands, setBands] = useState<band[] | null>(null);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
@@ -32,7 +32,9 @@ export default function ShowActors({ setSearch }: Props) {
         <div className="flex gap-4 flex-wrap justify-center p-4">
           {bands!.map((band: band) => (
             <button
-              onClick={() => setSearch(band.name)}
+              onClick={() => {
+                setSearchMode(["byActor", band.name]);
+              }}
               key={band.id}
               className="flex flex-col w-80 gap-5 md:gap-0 md:h-80 bg-slate-500 rounded-3xl p-2"
             >

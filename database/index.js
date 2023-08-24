@@ -1,7 +1,7 @@
 let mysql = require("mysql");
 let config = require("./sqlconfig");
 
-async function haeKaikki(sort = "id") {
+async function haeKaikki(sort = "date") {
   return new Promise((resolve, reject) => {
     const connection = mysql.createConnection({
       host: config.server.host,

@@ -2,15 +2,16 @@
 import ShowAll from "./pages/ShowAll";
 import ShowByName from "./pages/ShowByName";
 import ShowActors from "./pages/ShowActors";
+import ShowByActor from "./pages/ShowByActor";
 import searchIcon from "./assets/search.svg";
 import { useEffect, useState } from "react";
 
 export default function App() {
-  const [searchMode, setSearchMode] = useState("all");
+  const [searchMode, setSearchMode] = useState(["all", ""]);
   const [search, setSearch] = useState("");
   useEffect(() => {
-    if (search.length > 0) setSearchMode("name");
-    else setSearchMode("all");
+    if (search.length > 0) setSearchMode(["name", ""]);
+    else setSearchMode(["all", ""]);
   }, [search]);
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     const x = e.currentTarget[0] as HTMLInputElement;
@@ -22,13 +23,13 @@ export default function App() {
     <div className="flex-1">
       <header className=" p-3 gap-3 md:gap-6 md:h-24 w-full bg-slate-700 flex flex-col items-center md:flex-row">
         <button
-          onClick={() => setSearchMode("all")}
+          onClick={() => setSearchMode(["all", ""])}
           className="text-4xl md:text-6xl"
         >
           All
         </button>
         <button
-          onClick={() => setSearchMode("actors")}
+          onClick={() => setSearchMode(["actors", ""])}
           className="text-4xl md:text-4xl"
         >
           Bands
@@ -48,12 +49,14 @@ export default function App() {
       </header>
       <main>
         {(() => {
-          if (searchMode === "all") {
+          if (searchMode[0] === "all") {
             return <ShowAll />;
-          } else if (searchMode === "name") {
+          } else if (searchMode[0] === "name") {
             return <ShowByName data={search} />;
-          } else if (searchMode === "actors") {
-            return <ShowActors setSearch={setSearch} />;
+          } else if (searchMode[0] === "actors") {
+            return <ShowActors setSearchMode={setSearchMode} />;
+          } else if (searchMode[0] === "byActor") {
+            return <ShowByActor data={searchMode[1]} />;
           } else {
             return <ShowAll />;
           }
