@@ -11,14 +11,24 @@ interface Festival {
 
 interface Props {
   data: string;
+  style: {
+    container: string;
+    card: string;
+    title: string;
+    bio: string;
+    country: string;
+    bands: string;
+    date: string;
+    city: string;
+  };
 }
 
-export default function ShowAll(props: Props) {
+export default function ShowAll({ data, style }: Props) {
   const [festivals, setFestivals] = useState<Festival[] | null>(null);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     async function fetchFestivals() {
-      const res = await fetch(`http://localhost:3001/festivals/${props.data}`);
+      const res = await fetch(`http://localhost:3001/festivals/${data}`);
       let json = await res.json();
       json = json.map((festival: Festival) => {
         festival.date = new Date(festival.date).toLocaleDateString();
@@ -28,26 +38,23 @@ export default function ShowAll(props: Props) {
       setLoading(false);
     }
     fetchFestivals();
-  }, [props.data]);
+  }, [data]);
 
   return (
     <>
       {loading ? (
         <div>Loading...</div>
       ) : (
-        <div className="flex gap-4 justify-center flex-wrap p-4">
+        <div className={style.container}>
           {festivals!.map((festival: Festival) => (
-            <div
-              key={festival.id}
-              className="flex flex-col w-80 gap-5 md:gap-0 md:h-80 bg-slate-500 rounded-3xl p-2"
-            >
-              <h1 className="text-3xl mx-auto">{festival.name}</h1>
+            <div key={festival.id} className={style.card}>
+              <h1 className={style.title}>{festival.name}</h1>
 
-              <p className="mx-auto text-xl my-auto">
+              <p className={style.bands}>
                 {festival.bands.replace(/,/g, ", ")}
               </p>
-              <p className="mt-auto mx-auto">{festival.date}</p>
-              <p className="mx-auto">{festival.city}</p>
+              <p className={style.date}>{festival.date}</p>
+              <p className={style.city}>{festival.city}</p>
             </div>
           ))}
         </div>

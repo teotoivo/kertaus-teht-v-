@@ -9,9 +9,19 @@ interface band {
 
 interface Props {
   setSearchMode: React.Dispatch<React.SetStateAction<string[]>>;
+  style: {
+    container: string;
+    card: string;
+    title: string;
+    bio: string;
+    country: string;
+    bands: string;
+    date: string;
+    city: string;
+  };
 }
 
-export default function ShowActors({ setSearchMode }: Props) {
+export default function ShowActors({ setSearchMode, style }: Props) {
   const [bands, setBands] = useState<band[] | null>(null);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
@@ -29,18 +39,18 @@ export default function ShowActors({ setSearchMode }: Props) {
       {loading ? (
         <div>Loading...</div>
       ) : (
-        <div className="flex gap-4 flex-wrap justify-center p-4">
+        <div className={style.container}>
           {bands!.map((band: band) => (
             <button
               onClick={() => {
                 setSearchMode(["byActor", band.name]);
               }}
               key={band.id}
-              className="flex flex-col w-80 gap-5 md:gap-0 md:h-80 bg-slate-500 rounded-3xl p-2"
+              className={style.card}
             >
-              <h1 className="text-3xl mx-auto">{band.name}</h1>
-              <p className="mx-auto text-xl my-auto">{band.bio}</p>
-              <p className="mt-auto mx-auto">{band.country}</p>
+              <h1 className={style.title}>{band.name}</h1>
+              <p className={style.bio}>{band.bio}</p>
+              <p className={style.country}>{band.country}</p>
             </button>
           ))}
         </div>

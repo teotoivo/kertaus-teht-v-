@@ -6,6 +6,17 @@ import ShowByActor from "./pages/ShowByActor";
 import searchIcon from "./assets/search.svg";
 import { useEffect, useState } from "react";
 
+const styles = {
+  container: "flex gap-4 flex-wrap justify-center p-4",
+  card: "flex flex-col w-80 gap-5 md:gap-0 md:h-80 bg-slate-500 rounded-3xl p-2",
+  title: "text-3xl mx-auto",
+  bio: "mx-auto text-xl my-auto",
+  country: "mt-auto mx-auto",
+  bands: "text-xl mx-auto my-auto",
+  date: "text-xl mx-auto",
+  city: "text-xl mx-auto",
+};
+
 export default function App() {
   const [searchMode, setSearchMode] = useState(["all", ""]);
   const [search, setSearch] = useState("");
@@ -50,15 +61,15 @@ export default function App() {
       <main>
         {(() => {
           if (searchMode[0] === "all") {
-            return <ShowAll />;
+            return <ShowAll style={styles} />;
           } else if (searchMode[0] === "name") {
-            return <ShowByName data={search} />;
+            return <ShowByName data={search} style={styles} />;
           } else if (searchMode[0] === "actors") {
-            return <ShowActors setSearchMode={setSearchMode} />;
+            return <ShowActors setSearchMode={setSearchMode} style={styles} />;
           } else if (searchMode[0] === "byActor") {
-            return <ShowByActor data={searchMode[1]} />;
+            return <ShowByActor data={searchMode[1]} style={styles} />;
           } else {
-            return <ShowAll />;
+            return <ShowAll style={styles} />;
           }
         })()}
       </main>
